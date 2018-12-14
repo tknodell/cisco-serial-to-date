@@ -55,8 +55,8 @@ var (
 Parses provided cisco serial and returns manufactured date
 
 Examples:
-go run serial_to_date.go --serial FAA04459FNI
-go run serial_to_date.go --filename serials.txt
+./serial_to_date --serial FAA04459FNI
+./serial_to_date --filename serials.txt
 `
 )
 

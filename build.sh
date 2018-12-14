@@ -4,5 +4,5 @@ set -e
 
 rm -rf ./bin
 mkdir -p ./bin
-go build -o ./bin/serial_to_date serial_to_date.go
+go build -o ./bin/serial_to_date main.go
 echo "Built succesfully, run ./bin/serial_to_date"

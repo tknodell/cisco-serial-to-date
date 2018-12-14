@@ -35,7 +35,7 @@ end
 unless ARGV.length == 1
   puts "You must specify either a single serial number, or a file with a list of serial numbers to process\n\n"
   puts "Example: ruby serial_to_date.rb FAA04459FNI\n"
-  puts "Example: ruby serial_to_date.rb cisco_serials.txt\n"
+  puts "Example: ruby serial_to_date.rb serials.txt\n"
   exit
 end
 

@@ -16,17 +16,18 @@ import (
 const yearOffset = 1996
 
 type serial struct {
-	serialNum     string
-	year, weekNum int
-	mfgDate       time.Time
+	serialNum, location string
+	year, weekNum       int
+	mfgDate             time.Time
 }
 
 // Splits out the year and week number out of a serial number
-func (s *serial) splitNums() {
+func (s *serial) splitChars() {
 	if len(s.serialNum) != 11 {
 		log.Fatal("Serial number must be exactly 11 characters")
 	}
-
+	// year is numbers 4 & 5 in string
+	// week is numbers 6 & 7 in string
 	parts := strings.Split(s.serialNum, "")
 	s.year, _ = strconv.Atoi(parts[3] + parts[4])
 	s.weekNum, _ = strconv.Atoi(parts[5] + parts[6])
@@ -35,13 +36,41 @@ func (s *serial) splitNums() {
 	}
 }
 
-// Parses the given serial and prints out its manufactured date
+// Parses the given serial and prints out extracted info
 func (s *serial) parseSerial() {
 	fmt.Println(s.serialNum)
-	s.splitNums()
+	s.getLocation()
+
+	s.splitChars()
 	s.year = s.year + yearOffset // Add our year offset
 	s.mfgDate = isoweek.StartTime(s.year, s.weekNum, time.UTC)
-	fmt.Println(s.mfgDate.Format("2006-01-02"))
+
+	fmt.Println("Manufatured on: " + s.mfgDate.Format("2006-01-02"))
+	fmt.Println("Manufatured in: " + s.location)
+}
+
+func (s *serial) getLocation() {
+	// locationCode is first 3 characters
+	locationCode := s.serialNum[0:3]
+
+	// Location codes
+	locations := map[string]string{
+		"CTH": "Celestica - Thailand",
+		"FAA": "Flextronics - San Jose, CA.",
+		"FOC": "Foxconn - Shenzhen China",
+		"JAB": "Jabil - Florida",
+		"JPE": "Jabil - Malaysia",
+		"JSH": "Jabil - Shanghai China",
+		"PEN": "Solectron - Malaysia",
+		"TAU": "Solectron - Texas",
+	}
+
+	// exists is a bool which will be true if the value exists in the map
+	if value, exists := locations[locationCode]; exists {
+		s.location = value
+	} else {
+		s.location = "Unknown"
+	}
 }
 
 type argT struct {

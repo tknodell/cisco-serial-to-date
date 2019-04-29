@@ -21,32 +21,19 @@ type serial struct {
 	mfgDate             time.Time
 }
 
-// Splits out the year and week number out of a serial number
-func (s *serial) splitChars() {
-	if len(s.serialNum) != 11 {
-		log.Fatal("Serial number must be exactly 11 characters")
-	}
-	// year is numbers 4 & 5 in string
-	// week is numbers 6 & 7 in string
-	parts := strings.Split(s.serialNum, "")
-	s.year, _ = strconv.Atoi(parts[3] + parts[4])
-	s.weekNum, _ = strconv.Atoi(parts[5] + parts[6])
-	if s.weekNum > 52 {
-		log.Fatal("Week number must not be higher than 52")
-	}
-}
-
 // Parses the given serial and prints out extracted info
 func (s *serial) parseSerial() {
 	fmt.Println(s.serialNum)
+
+	if len(s.serialNum) != 11 {
+		log.Fatal("Serial number must be exactly 11 characters")
+	}
+
 	s.getLocation()
+	s.getMfgDate()
 
-	s.splitChars()
-	s.year = s.year + yearOffset // Add our year offset
-	s.mfgDate = isoweek.StartTime(s.year, s.weekNum, time.UTC)
-
-	fmt.Println("Manufatured on: " + s.mfgDate.Format("2006-01-02"))
-	fmt.Println("Manufatured in: " + s.location)
+	fmt.Println("Manufactured on: " + s.mfgDate.Format("2006-01-02"))
+	fmt.Println("Manufactured in: " + s.location)
 }
 
 func (s *serial) getLocation() {
@@ -71,6 +58,23 @@ func (s *serial) getLocation() {
 	} else {
 		s.location = "Unknown"
 	}
+}
+
+// Splits out the year and week number out of a serial number
+// Then determines the manufactured date by adding yearOffset
+func (s *serial) getMfgDate() {
+	// year is numbers 4 & 5 in string
+	// week is numbers 6 & 7 in string
+	parts := strings.Split(s.serialNum, "")
+	s.year, _ = strconv.Atoi(parts[3] + parts[4])
+	s.weekNum, _ = strconv.Atoi(parts[5] + parts[6])
+
+	if s.weekNum > 52 {
+		log.Fatal("Week number must not be higher than 52")
+	}
+
+	s.year = s.year + yearOffset // Add our year offset
+	s.mfgDate = isoweek.StartTime(s.year, s.weekNum, time.UTC)
 }
 
 type argT struct {

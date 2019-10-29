@@ -77,11 +77,16 @@ func (s *serial) getMfgDate() (time.Time, error) {
 	year, _ := strconv.Atoi(parts[3] + parts[4])
 	weekNum, _ := strconv.Atoi(parts[5] + parts[6])
 
+	year = year + yearOffset // Add our year offset
+
+	if year > time.Now().Year() {
+		return time.Time{}, fmt.Errorf("Year cannot be in the future")
+	}
+
 	if weekNum > 52 {
 		return time.Time{}, fmt.Errorf("Week number must not be higher than 52")
 	}
 
-	year = year + yearOffset // Add our year offset
 	return isoweek.StartTime(year, weekNum, time.UTC), nil
 }
 

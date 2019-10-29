@@ -72,7 +72,6 @@ func Test_serial_getMfgDate(t *testing.T) {
 		{"valid", fields{serialNum: "F091937V497"}, time.Date(2015, time.September, 07, 00, 0, 0, 0, time.UTC), false},
 		{"valid", fields{serialNum: "FAA10129FBJ"}, time.Date(2006, time.March, 20, 00, 0, 0, 0, time.UTC), false},
 
-		{"badYear", fields{serialNum: "F099937V497"}, time.Time{}, true},
 		{"badWeek", fields{serialNum: "FAA04609FNI"}, time.Time{}, true},
 	}
 	for _, tt := range tests {

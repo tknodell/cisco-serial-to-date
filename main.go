@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -49,7 +50,7 @@ func printInfo(serialnum string) {
 
 func newSerial(serialnum string) (*serial, error) {
 	if len(serialnum) != 11 {
-		return nil, fmt.Errorf("Serial number must be exactly 11 characters")
+		return nil, errors.New("Serial number must be exactly 11 characters")
 	}
 
 	return &serial{
@@ -80,11 +81,11 @@ func (s *serial) getMfgDate() (time.Time, error) {
 	year = year + yearOffset // Add our year offset
 
 	if year > time.Now().Year() {
-		return time.Time{}, fmt.Errorf("Year cannot be in the future")
+		return time.Time{}, errors.New("Year cannot be in the future")
 	}
 
 	if weekNum > 52 {
-		return time.Time{}, fmt.Errorf("Week number must not be higher than 52")
+		return time.Time{}, errors.New("Week number must not be higher than 52")
 	}
 
 	return isoweek.StartTime(year, weekNum, time.UTC), nil

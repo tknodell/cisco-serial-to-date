@@ -1,0 +1,29 @@
+# github.com/Bowery/prompt v0.0.0-20180817134258-8a1d5376df1c
+## explicit
+github.com/Bowery/prompt
+# github.com/labstack/gommon v0.2.8
+## explicit
+github.com/labstack/gommon/color
+# github.com/mattn/go-colorable v0.0.9
+## explicit
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.4
+## explicit
+github.com/mattn/go-isatty
+# github.com/mkideal/cli v0.0.2
+## explicit
+github.com/mkideal/cli
+# github.com/mkideal/pkg v0.0.0-20170503154153-3e188c9e7ecc
+## explicit
+github.com/mkideal/pkg/debug
+github.com/mkideal/pkg/expr
+# github.com/snabb/isoweek v1.0.0
+## explicit
+github.com/snabb/isoweek
+# github.com/stretchr/testify v1.7.0
+## explicit
+# golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
+## explicit
+# golang.org/x/sys v0.0.0-20201119102817-f84b799fce68
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
